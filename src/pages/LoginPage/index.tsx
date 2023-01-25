@@ -1,4 +1,4 @@
-import react, { useContext } from "react";
+import react, { useContext, useState } from "react";
 
 // Context
 import { StudentContext } from "../../contexts/studentContext";
@@ -10,12 +10,56 @@ import { ActionIcon, Alert, Button, PasswordInput, TextInput } from "@mantine/co
 import { IconAlertCircle, IconDatabase, IconLoader } from "@tabler/icons";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { LockOpen, PermIdentity, AutoFixHigh, Info } from "@mui/icons-material";
+import { ILoginData } from "../../@types/loginData";
+
+// Axios
+import axios from "axios";
+import { Constants } from "../../constants/constants";
 
 export const LoginPage: React.FC = () => {
   const { studentData, saveStudentData } = useContext(StudentContext) as StudentContextType;
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const [loginData, setLoginData] = useState<ILoginData>({
+    username: "",
+    password: "",
+  });
 
-  const handleStudentLogin = () => {};
+  document.title = "Login | Auto English Discoveries Learning - KMITL";
+
+  const handleStudentLogin = async () => {
+    console.log(loginData);
+
+    if (!loginData.username || !loginData.password) {
+      return alert(
+        "ไม่สามารถดำเนินการต่อได้ : โปรดกรอกชื่อผู้ใช้ (username) และรหัสผ่าน (password) เพื่อใช้ในการเข้าสู่ระบบ"
+      );
+    }
+
+    setIsLoading(true);
+
+    await axios({
+      method: "post",
+      url: `${Constants.BASE_API_ENDPOINT}/apis/Auth/Login`,
+      data: {
+        password: loginData.password,
+        username: loginData.username,
+      },
+    })
+      .then((res) => {
+        const { Token } = res.data.UserInfo;
+        saveStudentData(loginData.username, loginData.password, Token);
+        setIsLoading(false);
+        navigate("/home");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(
+          "ข้อผิดพลาด : ไม่สามารถเข้าสู่ระบบได้ ชื่อผู้ใช้ (username) และ/หรือ รหัสผ่าน (password) ไม่ถูกต้อง หรือ ไม่ได้ลงทะเบียนในระบบ"
+        );
+        setIsLoading(false);
+      });
+  };
 
   return (
     <div className="p-4">
@@ -29,7 +73,7 @@ export const LoginPage: React.FC = () => {
         </div>
 
         <div className="mt-3">
-          <Alert title="เฉพาะนักศึกษา KMITL เท่านั้น !" color="orange">
+          <Alert title="เฉพาะนักศึกษา KMITL เท่านั้น !" color="orange" radius="md">
             บริการนี้รองรับการทำงานเฉพาะ English Discoveries (EngDis)
             ของนักศึกษาสถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง
             <div className="mt-4">
@@ -53,6 +97,10 @@ export const LoginPage: React.FC = () => {
             radius="md"
             withAsterisk
             icon={<PermIdentity fontSize="small" />}
+            value={loginData.username}
+            onChange={(event) =>
+              setLoginData({ ...loginData, username: event.currentTarget.value })
+            }
           />
 
           <PasswordInput
@@ -63,13 +111,28 @@ export const LoginPage: React.FC = () => {
             radius="md"
             withAsterisk
             icon={<LockOpen fontSize="small" />}
+            value={loginData.password}
+            onChange={(event) =>
+              setLoginData({ ...loginData, password: event.currentTarget.value })
+            }
           />
 
           <div className="flex justify-around gap-4 mt-4">
-            <Button radius="md" className="w-6/12 bg-white text-orange-600 shadow">
+            <Button
+              radius="md"
+              className="w-6/12 bg-white text-orange-600 shadow"
+              onClick={() =>
+                window.open("https://ed20.engdis.com/thai#/login", "_blank", "noopener,noreferrer")
+              }
+            >
               EngDis เว็บไซต์
             </Button>
-            <Button radius="md" className="w-6/12 bg-orange-500 active:bg-orange-600 font-bold">
+            <Button
+              radius="md"
+              className="w-6/12 bg-orange-500 active:bg-orange-600 font-bold"
+              onClick={handleStudentLogin}
+              loading={isLoading}
+            >
               เข้าสู่ระบบ
             </Button>
           </div>
