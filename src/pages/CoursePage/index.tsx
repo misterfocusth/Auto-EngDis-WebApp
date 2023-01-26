@@ -48,31 +48,39 @@ export const CoursePage: React.FC = () => {
   const handleAutoEngDis = async (data: any[any]) => {
     const tasks: any[any] = [];
 
-    for (let x in data.Children) {
-      // console.log(data.Children[x]);
+    data.Children.map((dataChildren: any[any]) => {
+      dataChildren.Children.map((subChildren: any[any]) => {
+        // console.log(data.ParentNodeId);
+        // console.log(subChildren.NodeId);
+        tasks.push([data.ParentNodeId, subChildren.NodeId]);
+      });
+    });
 
-      for (let y in data.Children[x]) {
-        // console.log(data.Children[x].Children[0]);
-        // console.log(data.Children[x].ParentNodeId);
+    // for (let x in data.Children) {
+    //   // console.log(data.Children[x]);
 
-        tasks.push([data.ParentNodeId, data.Children[x].Children[0].NodeId]);
-      }
-    }
+    //   for (let y in data.Children[x]) {
+    //     // console.log(data.Children[x].Children[0]);
+    //     // console.log(data.Children[x].ParentNodeId);
+
+    //     tasks.push([data.ParentNodeId, data.Children[x].Children[0].NodeId]);
+    //   }
+    // }
 
     console.log(tasks);
 
     for (let x in tasks) {
-      console.log("Requested TASK: " + x);
       axios({
         method: "post",
         url: `${Constants.BASE_API_ENDPOINT}/apis/Progress/SetProgressPerTask`,
         data: {
           token: studentData!.token,
-          CourseId: tasks[x][0],
+          CourseId: tasks[x][0] - 1,
           ItemId: tasks[x][1],
         },
       })
         .then((response) => {
+          console.log("Requested TASK: " + tasks[x][1]);
           console.log(response.data);
         })
         .catch((error) => {
