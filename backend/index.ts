@@ -97,6 +97,23 @@ app.post("/apis/Progress/SetProgressPerTask", (req, res, next) => {
     .catch((error) => console.log(error));
 });
 
+app.post("/apis/UserTestV1/SaveUserTest", (req, res, next) => {
+  const config = {
+    headers: { Authorization: `Bearer ${req.body.token}` },
+  };
+
+  axios
+    .post(
+      `${ENGDIS_BASE_API_URL}UserTestV1/SaveUserTest/${req.body.parentNodeId}/${req.body.nodeId}/true`,
+      req.body.payload,
+      config
+    )
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((error) => console.log(error));
+});
+
 app.listen(3000, () => {
   console.log(`Server are now started on port: 3000`);
 });

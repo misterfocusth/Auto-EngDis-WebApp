@@ -8,8 +8,7 @@ import { MyLoader } from "../../components/MyLoader";
 import { Constants } from "../../constants/constants";
 import { StudentContext } from "../../contexts/studentContext";
 
-// Sweetalert
-import Swal from "sweetalert2";
+import { testPayload } from "./testPayload";
 
 export const CoursePage: React.FC = () => {
   const { nodeId, parentNodeId } = useParams();
@@ -29,15 +28,8 @@ export const CoursePage: React.FC = () => {
       },
     })
       .then((response) => {
-        // console.log(response.data[0]);
         setCourseData(response.data[0]);
         setIsLoading(false);
-
-        //   console.log(defaultCourseProgress.CourseProgressTree.Progress);
-
-        //   defaultCourseProgress.CourseProgressTree.Children.map((data: any, index: any) => {
-        //     console.log(data.Progress);
-        //   });
       })
       .catch((error) => {
         console.log(error);
@@ -84,12 +76,32 @@ export const CoursePage: React.FC = () => {
         .then((response) => {
           console.log("Requested TASK: " + tasks[x][1]);
           console.log(response.data);
+
+          axios({
+            method: "post",
+            url: `${Constants.BASE_API_ENDPOINT}/apis/UserTestV1/SaveUserTest`,
+            data: {
+              token: studentData!.token,
+              payload: testPayload[1][2].payload,
+              parentNodeId: 523592767,
+              nodeId: 36140,
+            },
+          })
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((error) => {
+              console.log(error);
+              setIsLoading(false);
+            });
         })
         .catch((error) => {
           console.log(error);
           setIsLoading(false);
         });
     }
+
+    console.log(testPayload[1][2].payload);
 
     await getCourseTree();
   };
