@@ -1,4 +1,4 @@
-import react, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 
 // Context
 import { StudentContext } from "../../contexts/studentContext";
@@ -6,9 +6,11 @@ import { StudentContext } from "../../contexts/studentContext";
 // React Router
 import { useNavigate } from "react-router-dom";
 import { StudentContextType } from "../../@types/student";
-import { ActionIcon, Alert, Button, PasswordInput, TextInput } from "@mantine/core";
-import { IconAlertCircle, IconDatabase, IconLoader } from "@tabler/icons";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
+// Mantine Components
+import { Alert, Button, PasswordInput, TextInput } from "@mantine/core";
+
+// Material-UI Icons
 import { LockOpen, PermIdentity, AutoFixHigh, Info } from "@mui/icons-material";
 import { ILoginData } from "../../@types/loginData";
 
@@ -17,7 +19,7 @@ import axios from "axios";
 import { Constants } from "../../constants/constants";
 
 // Sweetalert
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 export const LoginPage: React.FC = () => {
   const { studentData, saveStudentData } = useContext(StudentContext) as StudentContextType;
@@ -34,9 +36,14 @@ export const LoginPage: React.FC = () => {
     console.log(loginData);
 
     if (!loginData.username || !loginData.password) {
-      return alert(
-        "ไม่สามารถดำเนินการต่อได้ : โปรดกรอกชื่อผู้ใช้ (username) และรหัสผ่าน (password) เพื่อใช้ในการเข้าสู่ระบบ"
-      );
+      return Swal.fire({
+        icon: "error",
+        iconColor: "#F97316",
+        confirmButtonColor: "#F97316",
+        title: "ไม่สามารถดำเนินการต่อได้",
+        text: "โปรดกรอกชื่อผู้ใช้ (username) และรหัสผ่าน (password) เพื่อใช้ในการเข้าสู่ระบบ",
+        confirmButtonText: "ตกลง",
+      });
     }
 
     setIsLoading(true);
@@ -58,10 +65,12 @@ export const LoginPage: React.FC = () => {
       .catch((error) => {
         console.log(error);
         Swal.fire({
-          icon: 'error',
-          title: 'เข้าสู่ระบบไม่สำเร็จ',
-          text: 'ชื่อผู้ใช้ (username) หรือ รหัสผ่าน (password) ไม่ถูกต้อง หรือ ไม่ได้ลงทะเบียนในระบบ',
-          confirmButtonText: 'ตกลง'
+          icon: "error",
+          iconColor: "#F97316",
+          confirmButtonColor: "#F97316",
+          title: "เข้าสู่ระบบไม่สำเร็จ",
+          text: "ชื่อผู้ใช้ (username) หรือ รหัสผ่าน (password) ไม่ถูกต้อง หรือ ไม่ได้ลงทะเบียนในระบบ",
+          confirmButtonText: "ตกลง",
         });
         setIsLoading(false);
       });
@@ -99,7 +108,6 @@ export const LoginPage: React.FC = () => {
           <TextInput
             label="รหัสนักศึกษา (ไม่ต้องใส่ @KMITL.AC.TH)"
             description="ตัวอย่าง : 09090999"
-            // error="โปรดใส่รหัสนักศึกษา"
             radius="md"
             withAsterisk
             icon={<PermIdentity fontSize="small" />}
@@ -113,7 +121,6 @@ export const LoginPage: React.FC = () => {
             className="mt-4"
             label="รหัสผ่านในการเข้าสู่ระบบ"
             description="ค่าเริ่มต้นคือรหัสนักศึกษา 5 ตัวสุดท้าย"
-            // error="โปรดใส่รหัสนักศึกษา"
             radius="md"
             withAsterisk
             icon={<LockOpen fontSize="small" />}
