@@ -15,6 +15,7 @@ export const CoursePage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   async function getCourseTree() {
+    console.log(studentData);
     axios({
       method: "post",
       url: `${Constants.BASE_API_ENDPOINT}/apis/CourseTree/getCourseTree`,
@@ -41,8 +42,43 @@ export const CoursePage: React.FC = () => {
       });
   }
 
-  const handleAutoEngDis = async (data: any[]) => {
+  const handleAutoEngDis = async (data: any[any]) => {
     console.log(data);
+    const tasks: any[any] = [];
+
+    for (let x in data.Children) {
+      // console.log(data.Children[x]);
+
+      for (let y in data.Children[x]) {
+        // console.log(data.Children[x].NodeId);
+        // console.log(data.Children[x].ParentNodeId);
+
+        tasks.push([data.Children[x].NodeId, data.Children[x].ParentNodeId]);
+      }
+    }
+
+    console.log(tasks);
+
+    for (let x in tasks) {
+      axios({
+        method: "post",
+        url: `${Constants.BASE_API_ENDPOINT}/apis/Progress/SetProgressPerTask`,
+        data: {
+          token: studentData!.token,
+          CourseId: tasks[x][0],
+          ItemId: tasks[x][1],
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+
+    setIsLoading(false);
   };
 
   useEffect(() => {
