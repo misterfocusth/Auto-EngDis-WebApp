@@ -16,6 +16,9 @@ import { ILoginData } from "../../@types/loginData";
 import axios from "axios";
 import { Constants } from "../../constants/constants";
 
+// Sweetalert
+import Swal from 'sweetalert2'
+
 export const LoginPage: React.FC = () => {
   const { studentData, saveStudentData } = useContext(StudentContext) as StudentContextType;
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -54,9 +57,12 @@ export const LoginPage: React.FC = () => {
       })
       .catch((error) => {
         console.log(error);
-        alert(
-          "ข้อผิดพลาด : ไม่สามารถเข้าสู่ระบบได้ ชื่อผู้ใช้ (username) และ/หรือ รหัสผ่าน (password) ไม่ถูกต้อง หรือ ไม่ได้ลงทะเบียนในระบบ"
-        );
+        Swal.fire({
+          icon: 'error',
+          title: 'เข้าสู่ระบบไม่สำเร็จ',
+          text: 'ชื่อผู้ใช้ (username) หรือ รหัสผ่าน (password) ไม่ถูกต้อง หรือ ไม่ได้ลงทะเบียนในระบบ',
+          confirmButtonText: 'ตกลง'
+        });
         setIsLoading(false);
       });
   };

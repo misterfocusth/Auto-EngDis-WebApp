@@ -8,6 +8,9 @@ import { MyLoader } from "../../components/MyLoader";
 import { Constants } from "../../constants/constants";
 import { StudentContext } from "../../contexts/studentContext";
 
+// Sweetalert
+import Swal from 'sweetalert2'
+
 export const CoursePage: React.FC = () => {
   const { nodeId, parentNodeId } = useParams();
   const { studentData } = useContext(StudentContext) as StudentContextType;

@@ -18,7 +18,8 @@
     "@tabler/icons": "^2.0.0",
     "axios": "^1.2.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "sweetalert2": "^11.7.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
