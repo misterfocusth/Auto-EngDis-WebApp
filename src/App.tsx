@@ -101,11 +101,11 @@ function App() {
         <p className="text-xs text-center">
           by{" "}
           <span className="underline">
-            <a href="">@misterfocusth</a> (IT20 KMITL)
+            <a href="https://github.com/misterfocusth">@misterfocusth</a> (IT20 KMITL)
           </span>
           {" & "}
           <span className="underline">
-            <a href="">@fewpz</a> (IT20 KMITL)
+            <a href="https://github.com/FewPz">@fewpz</a> (IT20 KMITL)
           </span>
         </p>
       </div>
