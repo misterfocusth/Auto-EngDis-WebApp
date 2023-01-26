@@ -103,6 +103,10 @@ function App() {
           <span className="underline">
             <a href="">@misterfocusth</a> (IT20 KMITL)
           </span>
+          {" & "}
+          <span className="underline">
+            <a href="">@fewpz</a> (IT20 KMITL)
+          </span>
         </p>
       </div>
     </div>
