@@ -53,7 +53,6 @@ app.post("/apis/CourseTree/GetDefaultCourseProgress", (req, res, next) => {
 });
 
 app.post("/apis/CourseTree/getCourseTree", (req, res, next) => {
-  console.log(req.body);
   const config = {
     headers: { Authorization: `Bearer ${req.body.token}` },
   };

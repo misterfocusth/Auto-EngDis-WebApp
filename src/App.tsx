@@ -29,7 +29,6 @@ function App() {
   const navigate = useNavigate();
 
   const handleStudentLogout = () => {
-    console.log(studentData!.token);
     if (confirm("ต้องการออกจากระบบ ?")) {
       axios({
         method: "post",
@@ -39,7 +38,6 @@ function App() {
         },
       })
         .then((response) => {
-          console.log(response.data);
           deleteStudentData();
           navigate("/login");
         })

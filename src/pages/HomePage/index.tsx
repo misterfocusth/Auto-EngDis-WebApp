@@ -29,11 +29,11 @@ export const HomePage: React.FC = () => {
           setDefaultCourseProgress(response.data);
           setIsLoading(false);
 
-          console.log(defaultCourseProgress.CourseProgressTree.Progress);
+          // console.log(defaultCourseProgress.CourseProgressTree.Progress);
 
-          defaultCourseProgress.CourseProgressTree.Children.map((data: any, index: any) => {
-            console.log(data.Progress);
-          });
+          // defaultCourseProgress.CourseProgressTree.Children.map((data: any, index: any) => {
+          //   console.log(data.Progress);
+          // });
         })
         .catch((error) => {
           console.log(error);

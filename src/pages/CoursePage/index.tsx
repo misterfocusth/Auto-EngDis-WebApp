@@ -9,7 +9,7 @@ import { Constants } from "../../constants/constants";
 import { StudentContext } from "../../contexts/studentContext";
 
 // Sweetalert
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 export const CoursePage: React.FC = () => {
   const { nodeId, parentNodeId } = useParams();
@@ -46,7 +46,6 @@ export const CoursePage: React.FC = () => {
   }
 
   const handleAutoEngDis = async (data: any[any]) => {
-    console.log(data);
     const tasks: any[any] = [];
 
     for (let x in data.Children) {
