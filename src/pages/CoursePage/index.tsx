@@ -29,7 +29,7 @@ export const CoursePage: React.FC = () => {
       },
     })
       .then((response) => {
-        console.log(response.data[0]);
+        // console.log(response.data[0]);
         setCourseData(response.data[0]);
         setIsLoading(false);
 
@@ -53,16 +53,17 @@ export const CoursePage: React.FC = () => {
       // console.log(data.Children[x]);
 
       for (let y in data.Children[x]) {
-        // console.log(data.Children[x].NodeId);
+        // console.log(data.Children[x].Children[0]);
         // console.log(data.Children[x].ParentNodeId);
 
-        tasks.push([data.Children[x].NodeId, data.Children[x].ParentNodeId]);
+        tasks.push([data.ParentNodeId, data.Children[x].Children[0].NodeId]);
       }
     }
 
     console.log(tasks);
 
     for (let x in tasks) {
+      console.log("Requested TASK: " + x);
       axios({
         method: "post",
         url: `${Constants.BASE_API_ENDPOINT}/apis/Progress/SetProgressPerTask`,
@@ -81,7 +82,7 @@ export const CoursePage: React.FC = () => {
         });
     }
 
-    setIsLoading(false);
+    await getCourseTree();
   };
 
   useEffect(() => {
@@ -163,7 +164,6 @@ export const CoursePage: React.FC = () => {
                 if (confirm("ยืนยันการใช้ Auto EngDis กับบทเรียนนี้ ?")) {
                   setIsLoading(true);
                   await handleAutoEngDis(data);
-                  await getCourseTree();
                 }
               }}
             >
