@@ -49,11 +49,13 @@ export const CoursePage: React.FC = () => {
     const tasks: any[any] = [];
 
     data.Children.map((dataChildren: any[any]) => {
-      dataChildren.Children.map((subChildren: any[any]) => {
-        // console.log(data.ParentNodeId);
-        // console.log(subChildren.NodeId);
-        tasks.push([data.ParentNodeId, subChildren.NodeId]);
-      });
+      if (dataChildren.Name == "Explore" || dataChildren.Name == "Practice") {
+        dataChildren.Children.map((subChildren: any[any]) => {
+          // console.log(data.ParentNodeId);
+          // console.log(subChildren.NodeId);
+          tasks.push([data.ParentNodeId, subChildren.NodeId]);
+        });
+      }
     });
 
     // for (let x in data.Children) {
