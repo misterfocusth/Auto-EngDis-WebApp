@@ -1,0 +1,5 @@
+{
+  "appService.zipIgnorePattern": ["node_modules{,/**}", ".vscode{,/**}"],
+  "appService.defaultWebAppToDeploy": "/subscriptions/36b8f186-31d4-4b6c-a2d9-b9d2b6932981/AppServices/subscriptions/36b8f186-31d4-4b6c-a2d9-b9d2b6932981/resourceGroups/Auto-EngDis-RG/providers/Microsoft.Web/sites/auto-engdis-apis-dev",
+  "appService.deploySubpath": "."
+}

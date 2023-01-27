@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "ts-node-dev index.ts"
+    "compile": "ts-node-dev index.ts",
+    "start": "npx tsc && node dist/index.js"
   },
   "keywords": [],
   "author": "",
