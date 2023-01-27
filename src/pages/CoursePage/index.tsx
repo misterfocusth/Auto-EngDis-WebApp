@@ -1,13 +1,26 @@
-import { Alert, Progress } from "@mantine/core";
-import { CheckCircle, Lock } from "@mui/icons-material";
-import axios from "axios";
 import { useEffect, useContext, useState } from "react";
+
+// Mantine UI - Components
+import { Alert, Progress } from "@mantine/core";
+
+// Materials UI - Icons
+import { CheckCircle, Lock } from "@mui/icons-material";
+
+// Axios
+import axios from "axios";
+
+// React Router
 import { useParams } from "react-router-dom";
+
+// Context
 import { StudentContextType } from "../../@types/student";
-import { MyLoader } from "../../components/MyLoader";
-import { Constants } from "../../constants/constants";
 import { StudentContext } from "../../contexts/studentContext";
 
+// Components
+import { MyLoader } from "../../components/MyLoader";
+import { Constants } from "../../constants/constants";
+
+// Payload
 import { testPayload } from "./testPayload";
 
 export const CoursePage: React.FC = () => {
@@ -107,6 +120,7 @@ export const CoursePage: React.FC = () => {
   };
 
   useEffect(() => {
+    document.title = "Course | Auto English Discoveries Learning - (KMITL)";
     getCourseTree();
   }, []);
 

@@ -11,7 +11,7 @@ import { StudentContextType } from "../../@types/student";
 import { Alert, Button, PasswordInput, TextInput } from "@mantine/core";
 
 // Material-UI Icons
-import { LockOpen, PermIdentity, AutoFixHigh, Info } from "@mui/icons-material";
+import { LockOpen, PermIdentity } from "@mui/icons-material";
 import { ILoginData } from "../../@types/loginData";
 
 // Axios

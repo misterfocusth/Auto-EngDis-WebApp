@@ -1,11 +1,25 @@
-import { Alert, Avatar, Button, Progress } from "@mantine/core";
 import { useState, useContext, useEffect } from "react";
-import { CheckCircle, Lock, Logout } from "@mui/icons-material";
+
+// Mantine UI - Components
+import { Alert, Progress } from "@mantine/core";
+
+// Materials UI - Icons
+import { CheckCircle, Lock } from "@mui/icons-material";
+
+// Context & Context Types
 import { StudentContext } from "../../contexts/studentContext";
 import { StudentContextType } from "../../@types/student";
+
+// React Router
 import { useNavigate } from "react-router-dom";
+
+// Constants
 import { Constants } from "../../constants/constants";
+
+// Axios
 import axios from "axios";
+
+// Components
 import { MyLoader } from "../../components/MyLoader";
 
 export const HomePage: React.FC = () => {
@@ -16,6 +30,8 @@ export const HomePage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    document.title = "Home | Auto English Discoveries Learning - (KMITL)";
+
     async function getGetDefaultCourseProgress() {
       axios({
         method: "post",
