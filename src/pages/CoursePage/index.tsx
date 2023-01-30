@@ -56,67 +56,38 @@ export const CoursePage: React.FC = () => {
     data.Children.map((dataChildren: any[any]) => {
       if (dataChildren.Name == "Explore" || dataChildren.Name == "Practice") {
         dataChildren.Children.map((subChildren: any[any]) => {
-          // console.log(data.ParentNodeId);
-          // console.log(subChildren.NodeId);
           tasks.push([data.ParentNodeId, subChildren.NodeId]);
         });
       }
     });
 
-    // for (let x in data.Children) {
-    //   // console.log(data.Children[x]);
-
-    //   for (let y in data.Children[x]) {
-    //     // console.log(data.Children[x].Children[0]);
-    //     // console.log(data.Children[x].ParentNodeId);
-
-    //     tasks.push([data.ParentNodeId, data.Children[x].Children[0].NodeId]);
-    //   }
-    // }
-
     console.log(tasks);
 
+    const requests = [];
+
     for (let x in tasks) {
-      axios({
-        method: "post",
-        url: `${Constants.BASE_API_ENDPOINT}/apis/Progress/SetProgressPerTask`,
-        data: {
+      requests.push(
+        axios.post(`${Constants.BASE_API_ENDPOINT}/apis/Progress/SetProgressPerTask`, {
           token: studentData!.token,
           CourseId: tasks[x][0] - 1,
           ItemId: tasks[x][1],
-        },
-      })
-        .then((response) => {
-          console.log("Requested TASK: " + tasks[x][1]);
-          console.log(response.data);
-
-          axios({
-            method: "post",
-            url: `${Constants.BASE_API_ENDPOINT}/apis/UserTestV1/SaveUserTest`,
-            data: {
-              token: studentData!.token,
-              payload: testPayload[1][2].payload,
-              parentNodeId: 523592767,
-              nodeId: 36140,
-            },
-          })
-            .then((response) => {
-              console.log(response.data);
-            })
-            .catch((error) => {
-              console.log(error);
-              setIsLoading(false);
-            });
         })
-        .catch((error) => {
-          console.log(error);
-          setIsLoading(false);
-        });
+      );
     }
 
-    console.log(testPayload[1][2].payload);
+    requests.push(
+      axios.post(`${Constants.BASE_API_ENDPOINT}/apis/UserTestV1/SaveUserTest`, {
+        token: studentData!.token,
+        payload: testPayload[1][2].payload,
+        parentNodeId: 523592767,
+        nodeId: 36140,
+      })
+    );
 
-    await getCourseTree();
+    axios
+      .all(requests)
+      .then(async () => await getCourseTree())
+      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
