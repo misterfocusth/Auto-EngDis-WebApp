@@ -133,7 +133,7 @@ export const LoginPage: React.FC = () => {
           <div className="flex justify-around gap-4 mt-4">
             <Button
               radius="md"
-              className="w-6/12 bg-white text-orange-600 shadow"
+              className="w-6/12 bg-white text-orange-600 hover:bg-orange-600 hover:text-white shadow"
               onClick={() =>
                 window.open("https://ed20.engdis.com/thai#/login", "_blank", "noopener,noreferrer")
               }
@@ -142,7 +142,7 @@ export const LoginPage: React.FC = () => {
             </Button>
             <Button
               radius="md"
-              className="w-6/12 bg-orange-500 active:bg-orange-600 font-bold"
+              className="w-6/12 bg-orange-500 hover:bg-orange-600 font-bold"
               onClick={handleStudentLogin}
               loading={isLoading}
             >
